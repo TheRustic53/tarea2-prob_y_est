@@ -1,0 +1,227 @@
+import random
+
+def tirar_dado():
+    return random.randint(1, 6)
+
+def jugar():
+    puntaje_jugador1 = 0
+    puntaje_jugador2 = 0
+     
+    print("Turno de Juan")
+    
+    # Turno del primer jugador
+    primer_dado = tirar_dado()
+    segundo_dado = tirar_dado()
+    
+    print(f"Dado 1: {primer_dado}, Dado 2: {segundo_dado}")
+    
+    if primer_dado == 4:
+        if segundo_dado < 4:
+            print("El segundo dado es menor a 4, se tira de nuevo este dado")
+           
+            segundo_dado = tirar_dado()
+            print(f"Dado 2: {segundo_dado}")
+           
+            puntaje_jugador1 = segundo_dado
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+        
+        else:
+            puntaje_jugador1 = segundo_dado
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+    
+    elif segundo_dado == 4:
+        if primer_dado < 4:
+            print("El primer dado es menor a 4, se tira de nuevo este dado")
+            
+            primer_dado = tirar_dado()
+            print(f"Dado 1: {primer_dado}")
+            
+            puntaje_jugador1 = primer_dado
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+        else:
+           puntaje_jugador1 = primer_dado
+           print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+    else:
+        
+        print("Ninguno de los dados fue un 4, Juan tira de nuevo")
+        
+        # Jugador 1 tira de nuevo
+        
+        primer_dado = tirar_dado()
+        segundo_dado = tirar_dado()
+        
+        print(f"Dado 1: {primer_dado}, Dado 2: {segundo_dado}")
+        
+        if primer_dado == 4:
+            puntaje_jugador1 = segundo_dado
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+            
+        elif segundo_dado == 4:
+            puntaje_jugador1 = primer_dado
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+            
+        else:
+            puntaje_jugador1 = 0
+            print(f"El puntaje del jugador 1 es {puntaje_jugador1}")
+    
+    # Turno del segundo jugador
+    print("Turno de Maria:")
+    
+    primer_dado = tirar_dado()
+    segundo_dado = tirar_dado()
+    
+    print(f"Dado 1: {primer_dado}, Dado 2: {segundo_dado}")
+    
+    if primer_dado == 4:
+        if puntaje_jugador1 >= segundo_dado:
+            print("El puntaje de Juan es mayor, se tira de nuevo el segundo dado")
+            
+            segundo_dado = tirar_dado()
+            print(f"Dado 2: {segundo_dado}")
+           
+            puntaje_jugador2 = segundo_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+            
+############---Comentar esta seccion si se quiere ver la estrategia de maximizar chances de ganar---###########
+        elif puntaje_jugador1 < 4 & puntaje_jugador1 == segundo_dado:
+            print(f"Se empato en {segundo_dado}, María decide tirar de nuevo")
+
+            segundo_dado = tirar_dado()
+            print(f"Dado 2: {segundo_dado}")
+           
+            puntaje_jugador2 = segundo_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+
+        else:
+            puntaje_jugador2 = segundo_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+            
+    elif segundo_dado == 4:
+        if puntaje_jugador1 > primer_dado:
+            print("El puntaje de Juan es mayor, se tira de nuevo el primer dado")
+            
+            primer_dado = tirar_dado()
+            print(f"Dado 1: {primer_dado}")
+            
+            puntaje_jugador2 = primer_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+
+############---Comentar esta seccion si se quiere ver la estrategia de maximizar chances de ganar---###########
+        elif puntaje_jugador1 < 4 & puntaje_jugador1 == primer_dado:
+            print(f"Se empato en {primer_dado}, María decide tirar de nuevo")
+            
+            primer_dado = tirar_dado()
+            print(f"Dado 1: {primer_dado}")
+            
+            puntaje_jugador2 = primer_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+           
+        else:
+            puntaje_jugador2 = primer_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+            
+    else:
+        print("Ninguno de los dados fue un 4, se tira de nuevo")
+        # El segundo jugador tira de nuevo
+        
+        primer_dado = tirar_dado()
+        segundo_dado = tirar_dado()
+        
+        print(f"Dado 1: {primer_dado}, Dado 2: {segundo_dado}")
+        
+        if primer_dado == 4:
+            puntaje_jugador2 = segundo_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+       
+        elif segundo_dado == 4:
+           
+            puntaje_jugador2 = primer_dado
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+        
+        else:
+            puntaje_jugador2 = 0
+            print(f"El puntaje del jugador 2 es {puntaje_jugador2}")
+            
+            
+    print("Puntaje de Juan:", puntaje_jugador1)
+    print("Puntaje de Maria:", puntaje_jugador2)
+    
+    if puntaje_jugador1 > puntaje_jugador2:
+        print("Juan gana")
+        return 1
+    elif puntaje_jugador2 > puntaje_jugador1:
+        print("Maria gana")
+        return 2
+    else:
+        print("Empate")
+        return 0
+    
+    
+#############----------Para ver correctamente los resultados de las iteraciones, comentar los prints de la funcion jugar----------#############
+
+    
+
+gana_juan = 0
+gana_maria = 0
+empate = 0
+i=0
+print("-------Se juegan 1000 veces ----------")
+while i < 1000:
+    if jugar() == 1:
+        gana_juan = gana_juan + 1
+        i = i + 1
+        
+    elif jugar() == 2:
+        gana_maria = gana_maria + 1
+        i = i + 1 
+    else:
+        empate = empate + 1
+        i = i + 1
+
+print("Juan gano", gana_juan)
+print("Maria gano", gana_maria)
+print("Se empataron", empate)
+
+
+gana_juan = 0
+gana_maria = 0
+empate = 0
+i=0
+print("-------Se juegan 10000 veces ----------")
+while i < 10000:
+    if jugar() == 1:
+        gana_juan = gana_juan + 1
+        i = i + 1
+        
+    elif jugar() == 2:
+        gana_maria = gana_maria + 1
+        i = i + 1 
+    else:
+        empate = empate + 1
+        i = i + 1
+
+print("Juan gano", gana_juan)
+print("Maria gano", gana_maria)
+print("Se empataron", empate)
+
+
+gana_juan = 0
+gana_maria = 0
+empate = 0
+i=0
+print("-------Se juegan 100000 veces ----------")
+while i < 100000:
+    if jugar() == 1:
+        gana_juan = gana_juan + 1
+        i = i + 1
+        
+    elif jugar() == 2:
+        gana_maria = gana_maria + 1
+        i = i + 1 
+    else:
+        empate = empate + 1
+        i = i + 1
+
+print("Juan gano", gana_juan)
+print("Maria gano", gana_maria)
+print("Se empataron", empate)
